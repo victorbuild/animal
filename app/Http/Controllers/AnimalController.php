@@ -48,7 +48,7 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        //
+        return response($animal, Response::HTTP_OK);
     }
 
     /**
