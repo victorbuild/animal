@@ -13,10 +13,40 @@ class AnimalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $animals = Animal::get();
-        return response(['animals' => $animals], Response::HTTP_OK);
+        // 設定預設值
+
+        $marker = isset($request->marker) ? $request->marker : 1;
+        $limit = isset($request->limit) ? $request->limit : 10;
+
+        $query = Animal::query();
+
+        // 篩選欄位條件
+        if (isset($request->filters)) {
+            $filters = explode(',', $request->filters);
+            foreach ($filters as $key => $filter) {
+                list($criteria, $value) = explode(':', $filter);
+                $query->where($criteria, $value);
+            }
+        }
+
+        //排列順序
+        if (isset($request->sort)) {
+            $sorts = explode(',', $request->sort);
+            foreach ($sorts as $key => $sort) {
+                list($criteria, $value) = explode(':', $sort);
+                if ($value == 'asc' || $value == 'desc') {
+                    $query->orderBy($criteria, $value);
+                }
+            }
+        } else {
+            $query->orderBy('id', 'asc');
+        }
+
+        $animals = $query->where('id', '>=', $marker)->paginate($limit);
+
+        return response($animals, Response::HTTP_OK);
     }
 
     /**
