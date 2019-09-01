@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Animal;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\AnimalResource;
 
 class AnimalController extends Controller
 {
@@ -89,7 +90,7 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        return response($animal, Response::HTTP_OK);
+        return response(new AnimalResource($animal), Response::HTTP_OK);
     }
 
     /**
