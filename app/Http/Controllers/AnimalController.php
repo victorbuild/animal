@@ -9,8 +9,16 @@ use App\Http\Resources\AnimalResource;
 
 class AnimalController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index','show']]);
+    }
+
     /**
      * Display a listing of the resource.
+     *
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
