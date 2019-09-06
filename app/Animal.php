@@ -32,6 +32,22 @@ class Animal extends Model
     }
 
     /**
+     * 取得動物的刊登人
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * 多對多關聯animal與user
+     */
+    public function like()
+    {
+        return $this->belongsToMany('App\User');
+    }
+
+    /**
      * 計算年齡
      *
      * @param  string  $value
