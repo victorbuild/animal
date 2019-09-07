@@ -12,8 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('like/{animal}', 'AnimalController@like');
-Route::delete('like/{animal}', 'AnimalController@unlike');
+Route::post('animal/{animal}/like', 'AnimalController@like');
 
 Route::apiResource('animal', 'AnimalController');
 Route::apiResource('types', 'TypeController');

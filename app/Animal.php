@@ -44,7 +44,7 @@ class Animal extends Model
      */
     public function like()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\User')->withTimestamps();
     }
 
     /**
