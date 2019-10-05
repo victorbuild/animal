@@ -51,6 +51,6 @@ class User extends Authenticatable
      */
     public function like()
     {
-        return $this->belongsToMany('App\Animal');
+        return $this->belongsToMany('App\Animal')->withTimestamps();
     }
 }

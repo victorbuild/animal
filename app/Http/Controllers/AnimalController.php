@@ -36,7 +36,7 @@ class AnimalController extends Controller
             $filters = explode(',', $request->filters);
             foreach ($filters as $key => $filter) {
                 list($criteria, $value) = explode(':', $filter);
-                $query->where($criteria, $value);
+                $query->where($criteria, 'like', "%$value%");
             }
         }
 
