@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\AnimalResource;
 use Auth;
+use App\Http\Requests\StoreAnimalRequest;
+
 class AnimalController extends Controller
 {
 
@@ -71,21 +73,11 @@ class AnimalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\StoreAnimalRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAnimalRequest $request)
     {
-        $this->validate($request, [
-            'type_id' => 'required',
-            'name' => 'required|max:255',
-            'birthday' => 'required|date',
-            'area' => 'required|max:255',
-            'fix' => 'required|boolean',
-            'description' => 'nullable',
-            'personality' => 'nullable'
-        ]);
-
         $animal = Animal::create($request->all());
         return response($animal, Response::HTTP_CREATED);
     }
