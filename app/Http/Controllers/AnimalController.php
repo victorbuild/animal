@@ -8,12 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\AnimalResource;
 use Auth;
 use App\Http\Requests\StoreAnimalRequest;
+use App\Services\AnimalService;
 
 class AnimalController extends Controller
 {
+    private $animalService;
 
-    public function __construct()
+    public function __construct(AnimalService $animalService)
     {
+        $this->animalService = $animalService;
         $this->middleware('auth:api', ['except' => ['index','show']]);
     }
 
@@ -33,27 +36,9 @@ class AnimalController extends Controller
 
         $query = Animal::query();
 
-        // 篩選欄位條件
-        if (isset($request->filters)) {
-            $filters = explode(',', $request->filters);
-            foreach ($filters as $key => $filter) {
-                list($criteria, $value) = explode(':', $filter);
-                $query->where($criteria, 'like', "%$value%");
-            }
-        }
-
-        //排列順序
-        if (isset($request->sort)) {
-            $sorts = explode(',', $request->sort);
-            foreach ($sorts as $key => $sort) {
-                list($criteria, $value) = explode(':', $sort);
-                if ($value == 'asc' || $value == 'desc') {
-                    $query->orderBy($criteria, $value);
-                }
-            }
-        } else {
-            $query->orderBy('id', 'asc');
-        }
+        $query = $this->animalService->filterAnimals($request->filters, $query);
+        
+        $query = $this->animalService->sortAnimals($request->sort, $query);
 
         $animals = $query->where('id', '>=', $marker)->paginate($limit);
 
