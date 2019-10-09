@@ -20,7 +20,7 @@ class AnimalTest extends TestCase
      */
     public function testViewAllAnimal()
     {
-        $response = $this->get('api/animal');
+        $response = $this->get('api/animals');
 
         $response->assertJsonStructure([
             "current_page",
@@ -66,7 +66,7 @@ class AnimalTest extends TestCase
 
         // 請求時並傳入資料
         $response = $this->json(
-            'POST', 'api/animal', 
+            'POST', 'api/animals', 
             [
                 'type_id' => '1',
                 'name' => '大黑',
@@ -100,7 +100,7 @@ class AnimalTest extends TestCase
 
         // 請求時並傳入資料
         $response = $this->json(
-            'POST', 'api/animal', 
+            'POST', 'api/animals', 
             [
                 'type_id' => '1',
                 'name' => '大黑',

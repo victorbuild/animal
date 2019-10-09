@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('animal/{animal}/like', 'AnimalController@like');
+Route::post('animals/{animal}/like', 'AnimalController@like');
 
-Route::apiResource('animal', 'AnimalController');
+Route::apiResource('animals', 'AnimalController');
 Route::apiResource('types', 'TypeController');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
