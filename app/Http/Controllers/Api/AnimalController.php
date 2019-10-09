@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Animal;
 use Illuminate\Http\Request;
@@ -9,6 +9,7 @@ use App\Http\Resources\AnimalResource;
 use Auth;
 use App\Http\Requests\StoreAnimalRequest;
 use App\Services\AnimalService;
+use App\Http\Controllers\Controller;
 
 class AnimalController extends Controller
 {
